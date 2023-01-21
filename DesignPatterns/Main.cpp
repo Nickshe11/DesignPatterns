@@ -41,6 +41,7 @@ public:
 	}
 	~Singleton()
 	{
+		delete instance;
 		cout << "Destructor:\t" << this << endl;
 	}
 	static Singleton* getInstance()
@@ -60,12 +61,18 @@ public:
 	}
 };
 
+Singleton* Singleton::instance = nullptr;
+
 void main()
 {	
 	setlocale(LC_ALL, "");
-	Singleton* director = Singleton::getInstance();
+	/*Singleton* director = Singleton::getInstance();
 	director->set_first_name("Василий");
 	director->set_last_name("Тупэнко");
 	director->set_birth_date(1990, 04, 01);
-	director->print();
+	director->print();*/
+	Singleton::getInstance()->set_last_name("Дурко");
+	Singleton::getInstance()->set_first_name("Виталий");
+	Singleton::getInstance()->set_birth_date(1990, 04, 1);
+	Singleton::getInstance()->print();
 }
