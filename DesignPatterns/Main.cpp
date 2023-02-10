@@ -1,4 +1,5 @@
-﻿#include<iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
 #include<ctime>
 using namespace std;
 
@@ -35,9 +36,9 @@ public:
 	}
 	void set_birth_date(size_t year, size_t month, size_t day)
 	{
-		this->birth_date.tm_year = year;
-		this->birth_date.tm_mon = month;
-		this->birth_date.tm_mday = day;	
+		this->birth_date.tm_year = year - 1900;
+		this->birth_date.tm_mon = month - 1;
+		this->birth_date.tm_mday = day;
 	}
 	~Singleton()
 	{
@@ -56,15 +57,21 @@ public:
 		//time(&timer);	//функция time() записывает текущее время в timer
 		//tm* current_timr = localtime(&timer);
 		//cout << asctime(current_time);
-
-		cout << last_name << " " << first_name << endl;
+		time_t timer;	// Хранит время в формате "Timestamp" (int, количество миллисекунд от даты 01.01.1970)
+		time(&timer);	//Получаем текущее время
+		tm* current_time = localtime(&timer); //Сохраняем текущее время в "человеческом формате"
+		size_t age = current_time->tm_year - birth_date.tm_year;
+		if (current_time->tm_mon < birth_date.tm_mon)age--;
+		if (current_time->tm_mon == birth_date.tm_mon && current_time->tm_mday < birth_date.tm_mday)age--;
+		//cout << last_name << " " << first_name << " " << age << " лет." << endl;
+		printf("%p:%s %s %d лет.\n", this, last_name.c_str(), first_name.c_str(), age);
 	}
 };
 
 Singleton* Singleton::instance = nullptr;
 
 void main()
-{	
+{
 	setlocale(LC_ALL, "");
 	/*Singleton* director = Singleton::getInstance();
 	director->set_first_name("Василий");
