@@ -27,7 +27,7 @@ public:
 	}
 	~CarPlayer()
 	{
-		cout << "CarplayerDestructor:\t" << this << endl;
+		cout << "CarDestructor:\t" << this << endl;
 	}
 	void print()const override
 	{
